@@ -22,6 +22,7 @@ Mọi thứ tự suy ra từ kịch bản, không cần viết code riêng cho t
 """
 
 import json
+import os
 import re
 import unicodedata
 from pathlib import Path
@@ -48,9 +49,36 @@ from kich_ban import Images, Script, ScriptScene, is_cta
 W, H = 1080, 1920
 FPS = 30
 
-FONT_BOLD = "/System/Library/Fonts/Supplemental/Arial Bold.ttf"
-FONT = "/System/Library/Fonts/Supplemental/Arial.ttf"
-FONT_EMOJI = "/System/Library/Fonts/Apple Color Emoji.ttc"
+
+def _first_font(*paths: str) -> str:
+    """Font đầu tiên có trên máy (macOS, Windows, Linux)."""
+    return next((p for p in paths if Path(p).exists()), paths[0])
+
+
+WIN_FONTS = Path(os.environ.get("WINDIR", r"C:\Windows")) / "Fonts"
+FONT_BOLD = _first_font(
+    "/System/Library/Fonts/Supplemental/Arial Bold.ttf",
+    str(WIN_FONTS / "arialbd.ttf"),
+    "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+)
+FONT = _first_font(
+    "/System/Library/Fonts/Supplemental/Arial.ttf",
+    str(WIN_FONTS / "arial.ttf"),
+    "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+)
+# Font emoji màu và cỡ chữ vẽ được (Apple Color Emoji chỉ vẽ ở 160, Noto Color Emoji ở 109)
+FONT_EMOJI = next(
+    (
+        (p, size)
+        for p, size in (
+            ("/System/Library/Fonts/Apple Color Emoji.ttc", 160),
+            (str(WIN_FONTS / "seguiemj.ttf"), 160),
+            ("/usr/share/fonts/truetype/noto/NotoColorEmoji.ttf", 109),
+        )
+        if Path(p).exists()
+    ),
+    None,
+)
 
 BLUE = (21, 94, 207)
 NAVY = (15, 23, 42)
@@ -192,10 +220,13 @@ def font(size, bold=True):
 
 
 def emoji(ch: str, size: int):
-    """Biểu tượng emoji màu (Apple Color Emoji chỉ vẽ ở cỡ 160 rồi thu nhỏ)."""
+    """Biểu tượng emoji màu: vẽ ở cỡ font hỗ trợ rồi thu nhỏ. Máy không có font emoji thì bỏ qua."""
+    if not FONT_EMOJI:
+        return None
     try:
-        f = ImageFont.truetype(FONT_EMOJI, 160)
-        im = Image.new("RGBA", (260, 260), (0, 0, 0, 0))
+        path, font_size = FONT_EMOJI
+        f = ImageFont.truetype(path, font_size)
+        im = Image.new("RGBA", (font_size + 100, font_size + 100), (0, 0, 0, 0))
         ImageDraw.Draw(im).text((10, 10), ch, font=f, embedded_color=True)
         box = im.getbbox()
         if not box:

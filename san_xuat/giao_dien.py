@@ -129,12 +129,15 @@ def list_projects() -> list:
 def delete_project(name: str) -> dict:
     """Chuyển cả thư mục dự án vào Thùng rác của máy (khôi phục được), không xóa hẳn.
 
-    Không ghi được vào Thùng rác (máy không phải macOS, hoặc bị chặn quyền) thì chuyển vào
+    Máy không phải macOS (Windows...), hoặc không ghi được vào Thùng rác thì chuyển vào
     du-an/.thung-rac/.
     """
     p = existing(name)
     job.check_free(p.root.name)
-    for trash in (Path.home() / ".Trash", PROJECTS / ".thung-rac"):
+    trashes = [PROJECTS / ".thung-rac"]
+    if sys.platform == "darwin":
+        trashes.insert(0, Path.home() / ".Trash")
+    for trash in trashes:
         try:
             trash.mkdir(exist_ok=True)
             dst = unique(trash / p.root.name)
@@ -610,9 +613,13 @@ class Job:
                     for old in p.kiem_tra.glob("snap_*.png"):
                         old.unlink()
             env = {**os.environ, "PYTHONUNBUFFERED": "1", "PYTHONIOENCODING": "utf-8"}
+            # Chạy thành nhóm tiến trình riêng để Dừng tắt được cả ffmpeg con
+            group = (
+                {"creationflags": subprocess.CREATE_NEW_PROCESS_GROUP}
+                if os.name == "nt" else {"start_new_session": True}
+            )
             self.proc = subprocess.Popen(
-                args, cwd=ROOT, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env=env,
-                start_new_session=True,
+                args, cwd=ROOT, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env=env, **group,
             )
             self.project, self.mode, self.reuse_voice = p.root.name, mode, reuse
             self.lines = notes + ["$ ./tao-video " + " ".join(a if " " not in a else f'"{a}"' for a in [f"du-an/{p.root.name}", *args[4:]])]
@@ -670,8 +677,14 @@ class Job:
                 return
             self.cancelled = True
             assert self.proc
-            with contextlib.suppress(ProcessLookupError):
-                os.killpg(self.proc.pid, signal.SIGTERM)
+            if os.name == "nt":
+                subprocess.run(
+                    ["taskkill", "/T", "/F", "/PID", str(self.proc.pid)],
+                    stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                )
+            else:
+                with contextlib.suppress(ProcessLookupError):
+                    os.killpg(self.proc.pid, signal.SIGTERM)
 
     def snapshot(self, since: int) -> dict:
         with self.lock:

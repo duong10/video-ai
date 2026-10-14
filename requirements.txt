@@ -2,6 +2,7 @@
 # Cài lại từ đầu:
 #   uv venv --python 3.13 .venv
 #   uv pip install --python .venv/bin/python -r requirements.txt
+# Windows: uv pip install --python .venv\Scripts\python.exe -r requirements.txt
 -e ./edge-tts
 -e ./moviepy
 python-docx

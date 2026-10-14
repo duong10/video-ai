@@ -1,0 +1,4 @@
+# Script chạy trên Windows cần xuống dòng kiểu CRLF, script shell cho macOS/Linux cần LF
+*.cmd text eol=crlf
+tao-video text eol=lf
+giao-dien text eol=lf

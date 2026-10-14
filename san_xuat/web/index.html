@@ -329,8 +329,8 @@ function confirmDeleteProject(name) {
   openModal(`<h3>Xoá dự án “${esc(p.tieu_de || p.ten)}”?</h3>
     <div class="facts"><span>Thư mục</span><b>du-an/${esc(p.ten)}</b><span>Tạo lúc</span><b>${fmtDate(p.tao_luc)}</b>
       <span>Trạng thái</span><b>${status}</b><span>Dung lượng</span><b>${fmtSize(p.dung_luong)}</b></div>
-    <p style="color:var(--ink2)">Toàn bộ kịch bản, ảnh, nhạc, giọng đọc và video của dự án sẽ được chuyển vào <b>Thùng rác</b> của máy.
-      Muốn lấy lại thì mở Thùng rác và kéo thư mục <b>${esc(p.ten)}</b> về <b>du-an/</b>.</p>
+    <p style="color:var(--ink2)">Toàn bộ kịch bản, ảnh, nhạc, giọng đọc và video của dự án sẽ được chuyển vào <b>Thùng rác</b> của máy
+      (Windows: thư mục <b>du-an/.thung-rac/</b>). Muốn lấy lại thì kéo thư mục <b>${esc(p.ten)}</b> về <b>du-an/</b>.</p>
     ${running ? '<div class="note">Dự án đang chạy. Bấm Dừng trong nhật ký rồi mới xoá được.</div>' : ""}
     <div class="mfoot"><button class="btn" id="delNo">Huỷ</button><button class="btn red" id="delYes" ${running ? "disabled" : ""}>🗑 Xoá dự án</button></div>`);
   $("#delNo").onclick = closeModal;
