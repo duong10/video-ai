@@ -1,0 +1,6 @@
+[submodule "edge-tts"]
+	path = edge-tts
+	url = https://github.com/duong10/kty-edge-tts.git
+[submodule "moviepy"]
+	path = moviepy
+	url = https://github.com/duong10/kty-moviepy.git

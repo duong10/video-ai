@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Video AI Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F5F8; --panel:#FFFFFF; --line:#E4E6EC; --line2:#EEF0F4;
+  --ink:#151824; --ink2:#4A5063; --ink3:#8A90A2;
+  --acc:#4F46E5; --acc-soft:#EEF0FF; --ok:#12A150; --ok-soft:#E7F7EE;
+  --warn:#D97706; --warn-soft:#FEF4E2; --err:#DC2626; --err-soft:#FDECEC;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1600px;height:1000px;background:var(--bg);color:var(--ink);
+  font-family:"Be Vietnam Pro",-apple-system,"Segoe UI",sans-serif;font-size:13px;line-height:1.4;overflow:hidden}
+.app{display:grid;grid-template-columns:210px 1fr;height:100%}
+
+/* sidebar */
+.side{background:#141726;color:#C9CDE0;padding:18px 14px;display:flex;flex-direction:column;gap:6px}
+.brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:700;font-size:15px;margin:0 4px 18px}
+.logo{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#6366F1,#EC4899);display:grid;place-items:center}
+.side h6{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:#6B7194;margin:8px 6px 4px;font-weight:600}
+.proj{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;font-size:13px}
+.proj.on{background:#252A40;color:#fff}
+.proj .dot{width:8px;height:8px;border-radius:50%;flex:none}
+.proj small{margin-left:auto;font-size:10.5px;color:#7E84A6}
+.newp{margin-top:8px;border:1px dashed #3A4060;color:#AEB3D0;padding:9px 10px;border-radius:8px;text-align:center}
+.side .foot{margin-top:auto;font-size:11px;color:#6B7194;padding:0 6px}
+
+/* main */
+.main{display:flex;flex-direction:column;min-width:0}
+.top{height:64px;background:var(--panel);border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 24px;gap:18px}
+.top h1{font-size:18px;font-weight:700}
+.top .path{color:var(--ink3);font-size:12px;font-family:ui-monospace,Menlo,monospace}
+.steps{display:flex;align-items:center;gap:6px;margin-left:auto}
+.step{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink3);padding:6px 10px;border-radius:20px}
+.step b{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:11px;background:var(--line2);color:var(--ink3)}
+.step.done{color:var(--ok)} .step.done b{background:var(--ok);color:#fff}
+.step.cur{color:var(--acc);background:var(--acc-soft);font-weight:600} .step.cur b{background:var(--acc);color:#fff}
+.sep{width:18px;height:1px;background:var(--line)}
+
+.body{flex:1;display:grid;grid-template-columns:600px 1fr 330px;gap:18px;padding:18px 22px;min-height:0}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.ch{display:flex;align-items:center;gap:9px;margin-bottom:11px}
+.ch h3{font-size:14px;font-weight:600}
+.ch .ic{width:26px;height:26px;border-radius:7px;display:grid;place-items:center;font-size:14px;background:var(--acc-soft)}
+.ch .r{margin-left:auto;display:flex;gap:6px;align-items:center}
+.coltitle{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:-4px}
+.tag{font-size:10.5px;font-weight:600;padding:3px 8px;border-radius:20px;white-space:nowrap}
+.tag.ok{background:var(--ok-soft);color:var(--ok)} .tag.warn{background:var(--warn-soft);color:var(--warn)}
+.tag.err{background:var(--err-soft);color:var(--err)} .tag.mut{background:var(--line2);color:var(--ink2)}
+.btn{font:inherit;font-size:12px;font-weight:500;border:1px solid var(--line);background:#fff;color:var(--ink2);padding:6px 11px;border-radius:7px;white-space:nowrap}
+.btn.acc{border-color:#C9CCFB;color:var(--acc);background:var(--acc-soft)}
+.hint{font-size:11.5px;color:var(--ink3)}
+
+/* file */
+.file{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:9px;padding:10px 12px;background:#FAFBFC}
+.fico{width:36px;height:42px;border-radius:6px;background:#2B5BD7;color:#fff;font-weight:700;font-size:10px;display:grid;place-items:center;flex:none}
+.fname{font-weight:600;font-size:12.5px}
+.fmeta{font-size:11.5px;color:var(--ink3);margin-top:2px}
+.chips{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+
+/* scene grid */
+.grid{display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
+.tile{display:flex;flex-direction:column;gap:4px}
+.th{aspect-ratio:9/16;border-radius:7px;background:#ddd center/cover no-repeat;position:relative;border:1px solid var(--line)}
+.th .n{position:absolute;top:4px;left:4px;background:rgba(15,18,30,.78);color:#fff;font-size:10px;font-weight:600;padding:1px 6px;border-radius:10px}
+.th .st{position:absolute;bottom:4px;right:4px;width:16px;height:16px;border-radius:50%;background:var(--ok);color:#fff;font-size:10px;display:grid;place-items:center;font-weight:700}
+.th .stack{position:absolute;bottom:4px;left:4px;background:var(--acc);color:#fff;font-size:10px;font-weight:600;padding:1px 6px;border-radius:10px}
+.th.miss{background:repeating-linear-gradient(45deg,#FFF6F6,#FFF6F6 6px,#FDECEC 6px,#FDECEC 12px);border:1.5px dashed #F0A3A3;display:grid;place-items:center;text-align:center;color:var(--err);font-size:10.5px;font-weight:500;padding:4px}
+.tl{font-size:10.5px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.alert{margin-top:11px;display:flex;gap:9px;align-items:center;background:var(--err-soft);color:#9B1C1C;border-radius:8px;padding:8px 11px;font-size:12px}
+
+.drop{border:1.5px dashed #CBD0DB;border-radius:9px;padding:12px;display:flex;align-items:center;gap:12px;color:var(--ink2);background:#FCFCFD}
+.drop .big{font-size:20px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.wave{display:flex;align-items:center;gap:2px;height:22px;flex:1}
+.wave i{display:block;width:3px;border-radius:2px;background:#A5A9F7}
+
+/* settings */
+label.f{display:block;font-size:11.5px;font-weight:600;color:var(--ink2);margin-bottom:5px}
+.sel{display:flex;align-items:center;justify-content:space-between;border:1px solid var(--line);border-radius:8px;padding:8px 11px;background:#fff}
+.sel .v{display:flex;align-items:center;gap:8px}
+.av{width:22px;height:22px;border-radius:50%;background:#DCE3FF;display:grid;place-items:center;font-size:11px}
+.fld{margin-bottom:12px}
+.slider{position:relative;height:6px;border-radius:4px;background:var(--line2);margin:10px 0 4px}
+.slider .fill{position:absolute;inset:0 auto 0 0;border-radius:4px;background:var(--acc)}
+.slider .knob{position:absolute;top:50%;width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--acc);transform:translate(-50%,-50%)}
+.scale{display:flex;justify-content:space-between;font-size:10.5px;color:var(--ink3)}
+.val{font-family:ui-monospace,Menlo,monospace;font-size:12px;font-weight:600;color:var(--acc);background:var(--acc-soft);padding:2px 7px;border-radius:5px}
+.flex{display:flex;align-items:center;gap:8px}
+.seg{display:flex;background:var(--line2);border-radius:8px;padding:3px}
+.seg span{flex:1;text-align:center;padding:6px 0;border-radius:6px;font-size:12px;color:var(--ink2)}
+.seg span.on{background:#fff;color:var(--ink);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.tg{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-top:1px solid var(--line2)}
+.tg .t{font-size:12.5px;font-weight:500}
+.tg .d{font-size:11px;color:var(--ink3)}
+.sw{width:34px;height:20px;border-radius:12px;background:#CBD0DB;position:relative;flex:none}
+.sw::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2)}
+.sw.on{background:var(--acc)} .sw.on::after{left:16px}
+
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink3);font-weight:600;text-align:left;padding:6px 6px;border-bottom:1px solid var(--line)}
+td{padding:6px 6px;border-bottom:1px solid var(--line2);color:var(--ink2)}
+td.k{color:var(--ink);font-weight:500}
+.in{display:inline-block;min-width:54px;border:1px solid var(--line);border-radius:6px;padding:3px 7px;font-size:11.5px;color:var(--ink3);background:#FAFBFC}
+.in.set{color:var(--acc);border-color:#C9CCFB;background:var(--acc-soft);font-weight:600}
+.tabs{display:flex;gap:4px}
+.tabs span{white-space:nowrap;font-size:11.5px;padding:4px 9px;border-radius:6px;color:var(--ink3)}
+.tabs span.on{background:var(--ink);color:#fff;font-weight:500}
+.pron{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.pron .in{flex:1;min-width:0;color:var(--ink);font-size:12px;padding:6px 9px}
+.pron .ar{color:var(--ink3)}
+
+/* preview */
+.phone{width:206px;margin:0 auto;aspect-ratio:9/16;border-radius:22px;border:7px solid #141726;background:#000 center/cover no-repeat;position:relative;overflow:hidden;box-shadow:0 10px 30px rgba(20,23,38,.18)}
+.sub{position:absolute;left:10px;right:10px;bottom:34px;background:rgba(0,0,0,.66);color:#fff;font-size:11px;font-weight:600;text-align:center;padding:5px 7px;border-radius:6px}
+.play{position:absolute;inset:0;display:grid;place-items:center}
+.play i{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.9);display:grid;place-items:center;font-style:normal;font-size:16px;color:var(--ink)}
+.tline{margin-top:12px}
+.bar{height:26px;display:flex;gap:2px;border-radius:6px;overflow:hidden}
+.bar span{background:#E0E3FF;flex:1}
+.bar span.cur{background:var(--acc)}
+.times{display:flex;justify-content:space-between;font-size:10.5px;color:var(--ink3);margin-top:4px;font-family:ui-monospace,Menlo,monospace}
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:12px}
+.stat{background:#FAFBFC;border:1px solid var(--line2);border-radius:8px;padding:7px;text-align:center}
+.stat b{display:block;font-size:15px}
+.stat span{font-size:10.5px;color:var(--ink3)}
+.go{width:100%;border:0;border-radius:10px;padding:13px;font:inherit;font-size:14px;font-weight:700;color:#fff;background:linear-gradient(135deg,#4F46E5,#7C3AED);box-shadow:0 6px 16px rgba(79,70,229,.35)}
+.ghost{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.ghost .btn{text-align:center;padding:8px 6px}
+.chk{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink2);margin:10px 0 2px}
+.box{width:16px;height:16px;border-radius:4px;background:var(--acc);color:#fff;font-size:10px;display:grid;place-items:center}
+.box.off{background:#fff;border:1.5px solid #CBD0DB}
+.log{background:#141726;color:#B7BCD6;border-radius:9px;padding:10px 12px;font-family:ui-monospace,Menlo,monospace;font-size:10.8px;line-height:1.65}
+.log .g{color:#5EE29A} .log .y{color:#FBBF5A} .log .r{color:#F88}
+.prog{height:5px;border-radius:3px;background:#2A2F48;margin-top:7px;overflow:hidden}
+.prog i{display:block;height:100%;width:62%;background:linear-gradient(90deg,#6366F1,#EC4899)}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- SIDEBAR -->
+  <aside class="side">
+    <div class="brand"><div class="logo">▶</div>Video AI Studio</div>
+    <h6>Dự án</h6>
+    <div class="proj on"><span class="dot" style="background:#FBBF24"></span>5 việc giao xe<small>test1</small></div>
+    <div class="proj"><span class="dot" style="background:#34D399"></span>Lịch đặt xe<small>test2</small></div>
+    <div class="proj"><span class="dot" style="background:#34D399"></span>Bảo dưỡng G-Car</div>
+    <div class="proj"><span class="dot" style="background:#6B7194"></span>Kịch bản mới</div>
+    <div class="newp">＋ Dự án mới</div>
+    <h6 style="margin-top:22px">Trạng thái</h6>
+    <div class="proj" style="padding:4px 10px;font-size:11.5px"><span class="dot" style="background:#34D399"></span>Đã có video</div>
+    <div class="proj" style="padding:4px 10px;font-size:11.5px"><span class="dot" style="background:#FBBF24"></span>Đang chuẩn bị</div>
+    <div class="proj" style="padding:4px 10px;font-size:11.5px"><span class="dot" style="background:#6B7194"></span>Chưa có kịch bản</div>
+    <div class="foot">du-an/ · 4 dự án<br>edge-tts · moviepy</div>
+  </aside>
+
+  <div class="main">
+    <!-- TOP BAR -->
+    <header class="top">
+      <div>
+        <h1>5 việc trước khi giao xe</h1>
+        <div class="path">du-an/test1</div>
+      </div>
+      <div class="steps">
+        <div class="step done"><b>✓</b>Kịch bản</div><div class="sep"></div>
+        <div class="step cur"><b>2</b>Ảnh &amp; hiệu ứng</div><div class="sep"></div>
+        <div class="step"><b>3</b>Giọng đọc</div><div class="sep"></div>
+        <div class="step"><b>4</b>Dựng video</div>
+      </div>
+    </header>
+
+    <div class="body">
+      <!-- COL 1: RESOURCES -->
+      <section class="col">
+        <div class="coltitle">Tài nguyên đầu vào</div>
+
+        <div class="card">
+          <div class="ch"><div class="ic">📄</div><h3>Kịch bản</h3><span class="tag err" style="background:var(--err-soft)">Bắt buộc</span>
+            <div class="r"><button class="btn">Thay file</button></div></div>
+          <div class="file">
+            <div class="fico">DOCX</div>
+            <div style="flex:1">
+              <div class="fname">Kich-ban-video-5-viec-truoc-khi-giao-xe_timeline-moi.docx</div>
+              <div class="fmeta">Bảng: Cảnh / Thời gian · Hình ảnh · Chữ trên màn hình · Lời đọc</div>
+            </div>
+            <span class="tag ok">✓ Đọc được</span>
+          </div>
+          <div class="chips">
+            <span class="tag mut">10 cảnh</span><span class="tag mut">video_90s · 92 giây</span>
+            <span class="tag mut">quang_cao_30s · 31 giây</span><span class="tag mut">Ảnh bìa: “5 VIỆC”</span>
+            <span class="tag mut">Bản gốc đã lưu</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="ch"><div class="ic">🖼️</div><h3>Ảnh từng cảnh</h3><span class="tag warn">14 / 15 ảnh</span>
+            <div class="r"><button class="btn acc">✨ Tạo prompt cho AI vẽ ảnh</button><button class="btn">＋ Tải ảnh</button></div></div>
+          <div class="grid">
+            <div class="tile"><div class="th" style="background-image:url(th/00-anh-bia.jpg)"><span class="n">Bìa</span><span class="st">✓</span></div><div class="tl">Ảnh bìa</div></div>
+            <div class="tile"><div class="th" style="background-image:url(th/01-mo-dau.jpg)"><span class="n">1</span><span class="st">✓</span></div><div class="tl">Mở đầu</div></div>
+            <div class="tile"><div class="th" style="background-image:url(th/02a-noi-lo-giay-to.jpg)"><span class="n">2</span><span class="stack">×5</span><span class="st">✓</span></div><div class="tl">Nỗi lo (a–e)</div></div>
+            <div class="tile"><div class="th" style="background-image:url(th/03-chuyen-y.jpg)"><span class="n">3</span><span class="st">✓</span></div><div class="tl">Chuyển ý</div></div>
+            <div class="tile"><div class="th" style="background-image:url(th/04-viec1-xac-minh.jpg)"><span class="n">4</span><span class="st">✓</span></div><div class="tl">Việc 1</div></div>
+            <div class="tile"><div class="th" style="background-image:url(th/05-viec2-dung-nguoi.jpg)"><span class="n">5</span><span class="st">✓</span></div><div class="tl">Việc 2</div></div>
+            <div class="tile"><div class="th" style="background-image:url(th/06-viec3-ghi-nhan-xe.jpg)"><span class="n">6</span><span class="st">✓</span></div><div class="tl">Việc 3</div></div>
+            <div class="tile"><div class="th" style="background-image:url(th/07-viec4-hop-dong.jpg)"><span class="n">7</span><span class="st">✓</span></div><div class="tl">Việc 4</div></div>
+            <div class="tile"><div class="th" style="background-image:url(th/08-viec5-theo-doi.jpg)"><span class="n">8</span><span class="st">✓</span></div><div class="tl">Việc 5</div></div>
+            <div class="tile"><div class="th miss">Kéo ảnh<br>cảnh 9<br>vào đây</div><div class="tl" style="color:var(--err)">Tóm tắt</div></div>
+            <div class="tile"><div class="th" style="background-image:url(th/10-keu-goi-hanh-dong.jpg)"><span class="n">10</span><span class="st">✓</span></div><div class="tl">Kêu gọi</div></div>
+          </div>
+          <div class="alert">⚠️ <span>Thiếu ảnh <b>Cảnh 9 · Tóm tắt quy trình</b>. Tên file cần có số cảnh, ví dụ <b>09_tom_tat.png</b>.</span></div>
+        </div>
+
+        <div class="row2">
+          <div class="card">
+            <div class="ch"><div class="ic">🎵</div><h3>Nhạc nền</h3><span class="tag mut">Tùy chọn</span></div>
+            <div class="file" style="padding:9px 10px">
+              <div class="fico" style="background:#DB2777;width:30px;height:34px">MP3</div>
+              <div style="flex:1;min-width:0">
+                <div class="fname" style="font-size:12px">upbeat-corporate.mp3</div>
+                <div class="wave">
+                  <i style="height:30%"></i><i style="height:60%"></i><i style="height:45%"></i><i style="height:80%"></i><i style="height:55%"></i><i style="height:95%"></i><i style="height:40%"></i><i style="height:70%"></i><i style="height:50%"></i><i style="height:85%"></i><i style="height:35%"></i><i style="height:65%"></i><i style="height:90%"></i><i style="height:45%"></i><i style="height:60%"></i><i style="height:30%"></i><i style="height:75%"></i><i style="height:50%"></i><i style="height:40%"></i><i style="height:70%"></i><i style="height:55%"></i><i style="height:35%"></i>
+                </div>
+              </div>
+            </div>
+            <div class="hint" style="margin-top:8px">.mp3 · .m4a · .wav — tự hạ nhỏ khi có lời đọc</div>
+          </div>
+          <div class="card">
+            <div class="ch"><div class="ic">✨</div><h3>Hiệu ứng (AI)</h3><span class="tag mut">Tùy chọn</span></div>
+            <div class="drop"><span class="big">⇪</span><div><b style="font-size:12px;color:var(--ink)">hieu_ung.json</b><div class="hint">Dán câu trả lời của ChatGPT / Gemini hoặc kéo file vào</div></div></div>
+            <div class="hint" style="margin-top:8px">Không có: tự dò khối trên ảnh thiết kế</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COL 2: SETTINGS -->
+      <section class="col">
+        <div class="coltitle">Cài đặt</div>
+
+        <div class="card">
+          <div class="ch"><div class="ic">🎙️</div><h3>Giọng đọc</h3><div class="r"><button class="btn">▶ Nghe thử</button></div></div>
+          <div class="fld">
+            <label class="f">Giọng</label>
+            <div class="sel"><div class="v"><span class="av">👨</span>Nam Minh <span class="hint">· vi-VN-NamMinhNeural</span></div><span class="hint">▾</span></div>
+          </div>
+          <div class="fld" style="margin-bottom:4px">
+            <div class="flex"><label class="f" style="margin:0">Tốc độ đọc chung</label><span class="val" style="margin-left:auto">+10%</span></div>
+            <div class="slider"><div class="fill" style="width:60%"></div><div class="knob" style="left:60%"></div></div>
+            <div class="scale"><span>-30%</span><span>Bình thường</span><span>+30%</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="ch"><div class="ic">🔤</div><h3>Cách đọc riêng</h3><span class="hint">Chữ trên phụ đề → cách giọng đọc</span></div>
+          <div class="pron"><span class="in">G-Car</span><span class="ar">→</span><span class="in">Gi Ca</span><span class="tag mut">Có sẵn</span></div>
+          <div class="pron"><span class="in">8Car</span><span class="ar">→</span><span class="in">Tám Ca</span><span class="hint" style="width:44px;text-align:center">✕</span></div>
+          <div class="pron"><span class="in" style="color:var(--ink3)">Thêm từ…</span><span class="ar">→</span><span class="in" style="color:var(--ink3)">Cách đọc…</span><span class="hint" style="width:44px;text-align:center;color:var(--acc);font-weight:600">＋</span></div>
+        </div>
+
+        <div class="card">
+          <div class="ch"><div class="ic">🎬</div><h3>Video</h3><span class="tag mut">Dọc 9:16</span></div>
+          <label class="f">Chữ trên màn hình</label>
+          <div class="seg" style="margin-bottom:10px"><span>Tự động</span><span>Luôn vẽ</span><span class="on">Không vẽ</span></div>
+          <div class="tg"><div><div class="t">Hiệu ứng tự dò khối</div><div class="d">Khối trên ảnh thiết kế hiện ra đúng lúc giọng nhắc tới</div></div><div class="sw on"></div></div>
+          <div class="tg"><div><div class="t">Phụ đề</div><div class="d">Hiện theo từng câu đọc</div></div><div class="sw on"></div></div>
+          <div class="tg"><div><div class="t">Nhạc nền</div><div class="d">Âm lượng khi có lời đọc</div></div><div class="flex"><span class="val">0.07</span><div class="sw on"></div></div></div>
+        </div>
+
+      </section>
+
+      <!-- COL 3: PREVIEW & RUN -->
+      <section class="col">
+        <div class="coltitle">Xem trước &amp; xuất</div>
+        <div class="card">
+          <div class="phone" style="background-image:url(th/04-viec1-xac-minh.jpg)">
+            <div class="play"><i>▶</i></div>
+            <div class="sub">Việc đầu tiên: xác minh giấy tờ của khách</div>
+          </div>
+          <div class="tline">
+            <div class="bar"><span></span><span></span><span style="flex:2"></span><span></span><span class="cur"></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+            <div class="times"><span>00:24</span><span>Cảnh 4</span><span>01:32</span></div>
+          </div>
+          <div class="stats">
+            <div class="stat"><b>92s</b><span>Thời lượng</span></div>
+            <div class="stat"><b>10</b><span>Cảnh</span></div>
+            <div class="stat"><b>15</b><span>Ảnh</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <button class="go">▶  Tạo video</button>
+          <div class="chk"><span class="box">✓</span>Dùng lại giọng đọc đã tạo</div>
+          <div class="ghost"><button class="btn">🎙️ Chỉ tạo giọng</button><button class="btn">📸 Xem thử ảnh</button></div>
+        </div>
+
+        <div class="log">
+          <div><span class="g">✓</span> Đọc kịch bản: 10 cảnh</div>
+          <div><span class="g">✓</span> Giọng đọc video_90s (dùng lại)</div>
+          <div><span class="y">●</span> Dựng video… cảnh 6/10</div>
+          <div class="prog"><i></i></div>
+          <div style="margin-top:6px;color:#6B7194">Kết quả: output/test1.mp4</div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+</body>
+</html>

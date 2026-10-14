@@ -1,0 +1,8 @@
+# Môi trường Python: tạo lại theo hướng dẫn trong requirements.txt
+.venv/
+
+# Dự án video (kịch bản, ảnh, giọng đọc, video): nặng, chỉ giữ trên máy
+du-an/
+
+__pycache__/
+.DS_Store

@@ -1,0 +1,7 @@
+#!/bin/sh
+# Một lệnh: kịch bản .docx + ảnh -> giọng đọc -> video hoàn chỉnh.
+#   ./tao-video du-an/<tên>            tạo giọng đọc + dựng video
+#   ./tao-video                        mọi dự án trong du-an/ chưa có video
+#   ./tao-video du-an/<tên> --help     xem các tùy chọn khác
+ROOT="$(cd "$(dirname "$0")" && pwd)"
+exec "$ROOT/.venv/bin/python" "$ROOT/san_xuat/tao_video.py" "$@"

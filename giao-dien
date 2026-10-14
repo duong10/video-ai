@@ -1,0 +1,6 @@
+#!/bin/sh
+# Giao diện web để tạo video (tải tài nguyên, cài đặt, bấm nút tạo video).
+#   ./giao-dien                 mở http://127.0.0.1:8765 trên trình duyệt
+#   ./giao-dien --cong 9000     dùng cổng khác
+ROOT="$(cd "$(dirname "$0")" && pwd)"
+exec "$ROOT/.venv/bin/python" "$ROOT/san_xuat/giao_dien.py" "$@"
