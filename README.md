@@ -292,6 +292,7 @@ Thư mục `skills/` có sẵn các skill:
 | Skill | Dùng ở đâu | Tác dụng |
 |---|---|---|
 | `chatgpt-gemini-tao-anh` | Đưa vào ChatGPT (GPT tuỳ chỉnh) hoặc Gemini (Gem) làm hướng dẫn | Vẽ đủ ảnh cho kịch bản và trả về `hieu_ung.json` |
+| `tao-kich-ban` | Claude Code: chép vào `~/.claude/skills/`, gọi `/tao-kich-ban <URL bài viết>` | Viết kịch bản `.docx` đúng mẫu từ một bài viết |
 | `claude-tao-anh` | Claude Code: chép vào `~/.claude/skills/`, gọi `/claude-tao-anh` | Tạo `prompt_tao_anh.md` từ kịch bản |
 | `photorealistic` | Claude Code: chép vào `~/.claude/skills/`, gọi `/photorealistic` | Viết prompt ảnh giống ảnh chụp thật (không hoạt hình) |
 

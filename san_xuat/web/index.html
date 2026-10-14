@@ -717,7 +717,7 @@ function renderVideoOpts() {
   el.innerHTML = `<div class="ch"><div class="ic">🎬</div><h3>Video</h3><span class="tag mut">Dọc 9:16</span></div>
     <label class="f">Chữ trên màn hình</label>
     <div class="seg" id="vText">${[[false, "Tự động"], ["bat", "Luôn vẽ"], ["tat", "Không vẽ"]].map(([k, l]) => `<button data-v="${k}" class="${text === k ? "on" : ""}">${l}</button>`).join("")}</div>
-    <div class="hint" style="margin:6px 0 10px">Tự động: ảnh chụp thì vẽ chữ theo kịch bản, ảnh thiết kế đã có chữ thì không.</div>
+    <div class="hint" style="margin:6px 0 10px">Tự động: ảnh chụp thì vẽ chữ theo kịch bản, ảnh thiết kế đã có chữ thì không. Chỉ chọn <b>Không vẽ</b> khi mọi ảnh đã có chữ sẵn.</div>
     ${sw("tat_hieu_ung_khoi", true, "Hiệu ứng tự dò khối", "Khối trên ảnh thiết kế hiện ra đúng lúc giọng nhắc tới")}
     ${sw("tat_phu_de", true, "Phụ đề", "Hiện theo từng câu đọc")}
     ${sw("tat_nhac_nen", true, "Nhạc nền", S.d.nhac.length ? "Dùng file trong mục Nhạc nền" : "Chưa có file nhạc")}

@@ -815,6 +815,7 @@ def build_entries(
     ``effects``: {số cảnh: SceneEffects} đọc từ hieu_ung.json; cảnh có mô tả thì theo đúng mô tả."""
     effects = effects or {}
     entries: List[Entry] = []
+    photos_without_text = []  # cảnh ảnh chụp mà cấu hình tắt chữ: video sẽ không có chữ nào
     for idx, (sc, st) in enumerate(zip(script.scenes, scenes)):
         speech = Speech(st.sentences)
         paths = images.scenes.get(sc.number, [])
@@ -852,9 +853,19 @@ def build_entries(
         text_on = overlays_on if overlays_on is not None else not graphic
         items, per_frame = parse_screen(sc.screen_lines) if text_on else ([], False)
         cta = text_on and last and is_cta(sc)
+        if paths and not graphic and not text_on and sc.screen_lines:
+            photos_without_text.append(sc.number)
 
         # hieu_ung.json có mô tả cảnh này: các khối hiện ra theo đúng mô tả của AI tạo ảnh.
+        # Mô tả chỉ dành cho ảnh thiết kế có sẵn chữ; ảnh chụp không có các khối đó, tách ra
+        # chỉ được những mảng ảnh nhòe, nên bỏ qua.
         fx = effects.get(sc.number)
+        if fx and fx.elements and paths and not graphic:
+            print(
+                f"  ! Cảnh {sc.number}: ảnh chụp, không có khối chữ như hieu_ung.json mô tả: bỏ qua hieu_ung.json"
+                + (", vẽ chữ theo kịch bản" if text_on else "")
+            )
+            fx = None
         if fx and fx.elements and paths and len(imgs) == 1:
             label = f"Cảnh {sc.number}"
             base, layers = manifest_layers(imgs[0], fx, label, speech, st.sentences, start, dur)
@@ -915,6 +926,12 @@ def build_entries(
 
         center = (560, 1250) if layers else (W // 2, H // 2)
         entries.append(Entry(scene_clip(frames, dur, layers, center), start, end, transition))
+    if photos_without_text:
+        print(
+            f"  ! Cảnh {', '.join(map(str, photos_without_text))} là ảnh chụp nhưng cấu hình đang tắt chữ trên màn hình"
+            ' (chu_tren_man_hinh = "tat"): video sẽ không có chữ ở các cảnh này.'
+            ' Muốn có chữ thì chọn "Tự động" hoặc "Luôn vẽ".'
+        )
     return entries
 
 

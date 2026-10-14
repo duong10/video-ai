@@ -1,0 +1,108 @@
+{
+  "tieu_de": "Quản lý lịch đặt xe bằng sổ, Excel, Zalo? Đến lúc đổi rồi!",
+  "nguon": "Bài viết “Phần mềm quản lý lịch đặt xe cho thuê ô tô” – g-car.vn",
+  "dinh_dang": "Video dọc 9:16 cho TikTok, Reels, YouTube Shorts",
+  "giong": "vi-VN-NamMinhNeural",
+  "toc_do": "+10%",
+  "giong_doc": "Gần gũi, đúng “nỗi đau” của người chạy cho thuê xe. Nhịp nhanh ở phần vấn đề, chậm và rõ hơn ở phần giải pháp. “G-Car” đọc là “Gi Ca”.",
+  "nhan_vat": "Chủ cơ sở cho thuê xe (dẫn chuyện) và một nhân viên trực booking.",
+  "canh": [
+    {
+      "ten": "Mở đầu",
+      "hinh_anh": {"mo_ta": "Điện thoại liên tục báo tin nhắn Zalo và cuộc gọi đến. Chủ xe lật sổ tay, mở Excel, vẻ rối."},
+      "chu": ["“Xe này… hôm đó có ai đặt chưa nhỉ?”"],
+      "loi_doc": "Khách gọi hỏi còn xe không, mà bạn phải lật sổ, mở Excel, kéo lại tin nhắn Zalo mới trả lời được?"
+    },
+    {
+      "ten": "Nỗi đau",
+      "hinh_anh": {
+        "mo_ta": "Cắt nhanh 4 khung:",
+        "khung": [
+          "Thông tin rải rác ở sổ, Excel, Zalo và cuộc gọi",
+          "Ghi chú chỉ có ngày, thiếu giờ nhận, giờ trả, địa điểm giao xe và tiền cọc",
+          "Bảng Excel dày đặc, chủ xe dò từng dòng",
+          "Một xe trả muộn khiến cả lịch bị đẩy lùi, khách sau đứng chờ"
+        ]
+      },
+      "chu": ["Từng nỗi đau hiện theo khung hình", "Khung cuối: chữ đỏ “TRÙNG LỊCH!”"],
+      "loi_doc": "Thông tin nằm mỗi nơi một ít. Nhân viên ghi ngày nhưng quên giờ nhận, giờ trả, quên cả đã cọc hay chưa. Muốn biết xe nào trống phải dò từng dòng Excel. Chỉ cần một xe trả muộn là cả lịch trong ngày bị đảo lộn, thậm chí nhận trùng khách."
+    },
+    {
+      "ten": "Chuyển ý",
+      "hinh_anh": {"mo_ta": "Chủ xe gập sổ lại, mở laptop có giao diện G-Car."},
+      "chu": ["“Một lịch đặt xe chuẩn cần có gì?”"],
+      "loi_doc": "Vấn đề không nằm ở bạn, mà ở cách ghi lịch. Một lịch đặt xe chuẩn cần đủ 5 nhóm thông tin."
+    },
+    {
+      "ten": "5 nhóm thông tin",
+      "hinh_anh": {"mo_ta": "Năm thẻ thông tin bật lên lần lượt, mỗi thẻ một biểu tượng."},
+      "chu": [
+        "🚗 Xe: biển số, dòng xe, trạng thái",
+        "👤 Khách: tên, số điện thoại, ghi chú",
+        "⏰ Thời gian: giờ nhận, giờ trả chính xác",
+        "💰 Tiền: cọc, tiền thuê dự kiến, còn nợ",
+        "📋 Trạng thái: chờ nhận, đang thuê, quá hạn"
+      ],
+      "loi_doc": "Xe: phải có biển số để không nhầm xe. Khách: tên, số điện thoại. Thời gian: không chỉ ngày, mà phải đúng giờ nhận, giờ trả. Tiền: cọc bao nhiêu, còn nợ bao nhiêu. Và trạng thái: đang chờ nhận, đang thuê hay đã quá hạn."
+    },
+    {
+      "ten": "Giải pháp G-Car",
+      "hinh_anh": {
+        "mo_ta": "Quay màn hình phần mềm G-Car:",
+        "khung": [
+          "Màn hình tổng các booking, lọc theo trạng thái (đang xử lý, đã hủy, đã chuyển hợp đồng)",
+          "Chọn ngày giờ, hệ thống báo xe trống hoặc xe đã có lịch",
+          "Bấm chuyển booking thành hợp đồng",
+          "Màn hình công nợ thu chi"
+        ]
+      },
+      "chu": [
+        "Xem tất cả booking ở một nơi",
+        "Kiểm tra xe trống trước khi chốt khách",
+        "Booking thành hợp đồng chỉ một lần bấm",
+        "Công nợ tự động theo dõi"
+      ],
+      "loi_doc": "Với G-Car, mọi booking nằm trên một màn hình, lọc theo trạng thái. Trước khi chốt khách, bạn kiểm tra ngay xe nào trống, khung giờ nào đã có hợp đồng. Booking chuyển thẳng thành hợp đồng, liên kết luôn công nợ và đối soát. Khách, xe, hợp đồng, tiền đều nằm trong một hệ thống."
+    },
+    {
+      "ten": "Xử lý phát sinh",
+      "hinh_anh": {"mo_ta": "Nhân viên nhận điện thoại khách xin gia hạn. Màn hình G-Car hiện cảnh báo “Xe đã có lịch tiếp theo”. Nhân viên bình tĩnh đổi sang xe khác."},
+      "chu": ["Đổi ngày · Hủy sau cọc · Gia hạn · Xe bảo dưỡng → Xử lý gọn"],
+      "loi_doc": "Khách đổi ngày, hủy khi đã cọc, xin gia hạn trong khi xe đã có khách sau, hay xe đang bảo dưỡng? Bạn nhìn thấy ngay để xử lý, không còn bị động."
+    },
+    {
+      "ten": "Lợi ích",
+      "hinh_anh": {"mo_ta": "Chủ xe thư thái uống cà phê và trả lời khách chỉ trong vài giây. Nhân viên nào nhìn vào cũng thấy cùng một lịch."},
+      "chu": [
+        "✅ Không cần nhớ trong đầu",
+        "✅ Cả đội cùng một thông tin",
+        "✅ Nhận khách nhanh hơn",
+        "✅ Công nợ rõ ràng"
+      ],
+      "loi_doc": "Không phải nhớ trong đầu. Cả đội nhìn cùng một lịch. Nhận khách nhanh hơn, công nợ rõ ràng hơn."
+    },
+    {
+      "ten": "Kêu gọi hành động",
+      "hinh_anh": {"mo_ta": "Logo G-Car, hotline và nút “Dùng thử miễn phí”."},
+      "chu": ["G-Car: Phần mềm quản lý cho thuê xe", "Hotline: 098.1855.854", "Dùng thử miễn phí"],
+      "loi_doc": "Ít xe hay nhiều xe đều dùng được. Đang quen Excel? Cứ chạy song song trong thời gian đầu. Dùng thử G-Car miễn phí ngay hôm nay, gọi 098.1855.854!"
+    }
+  ],
+  "rut_gon": [
+    "Vẫn quản lý lịch xe bằng sổ, Excel và Zalo? Coi chừng trùng lịch!",
+    "Với G-Car, mọi booking nằm trên một màn hình. Kiểm tra xe trống trước khi chốt khách, chuyển booking thành hợp đồng, theo dõi luôn công nợ.",
+    "Dùng thử G-Car miễn phí, gọi 098.1855.854."
+  ],
+  "caption": [
+    "📅 Quản lý lịch đặt xe bằng sổ tay, Excel, Zalo? Trùng lịch, quên cọc, xe trả muộn làm rối cả ngày?",
+    "👉 G-Car gom hết booking, hợp đồng, công nợ về một nơi. Kiểm tra xe trống chỉ trong vài giây!",
+    "📞 Hotline: 098.1855.854, dùng thử miễn phí."
+  ],
+  "hashtag": "#chothuexe #quanlychothuexe #phanmemchothuexe #xetulai #GCar #quanlybooking",
+  "goi_y": [
+    {"nhan": "Cảnh 5 và 6 (màn hình phần mềm)", "noi_dung": "Nên quay màn hình G-Car thật với dữ liệu mẫu. Nhớ che hoặc thay số điện thoại và biển số thật của khách."},
+    {"nhan": "Nhạc nền", "noi_dung": "Cảnh 2 dồn dập, âm báo tin nhắn chồng lên nhau. Từ cảnh 3 chuyển sang nhạc nhẹ, tích cực."},
+    {"nhan": "Phụ đề", "noi_dung": "Luôn bật, vì phần lớn người xem lướt video không bật tiếng."},
+    {"nhan": "Ảnh bìa", "noi_dung": "Chủ xe ôm đầu giữa đống sổ sách, kèm chữ to “HẾT CẢNH TRÙNG LỊCH XE”."}
+  ]
+}
